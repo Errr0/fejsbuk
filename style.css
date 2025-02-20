@@ -1,0 +1,41 @@
+*{
+    margin: 0px;
+}
+
+html{
+    margin: 0px;
+    height: 100%;
+}
+
+
+body{
+    margin: 0px;
+    height: 100%;
+}
+
+#banner{
+    background: #5b5bec;
+    height: 15%;
+    color: white;
+}
+
+#content{
+    background: #f0f0ff;
+    height: 83%;
+    text-align: center;
+}
+
+#footer{
+    background: #4d49e1;
+    text-align: right;
+    color: white;
+    height: 2%;
+}
+
+h1{
+    font-size: 100px;
+}
+
+button{
+    width: 100px;
+}
