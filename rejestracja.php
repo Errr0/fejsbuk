@@ -27,6 +27,28 @@
         <input required type="text" name="haslo2" placeholder="powtórz haslo"><br/>
         <button name="dodaj_konto">Zarejestruj się</button>
         </form>
+        <?php
+            if(isset($_POST['dodaj_konto'])){
+                $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
+                $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `name` = '".$_POST['login']."'";// AND `password` = '".sha1($_POST['haslo'])."'";
+                $result = mysqli_fetch_array(mysqli_query($conn, $sql));
+                
+                if($result){
+                    echo "login zajęty";
+                } else {
+                    if($_POST['haslo'] != $_POST['haslo2']){
+                        echo "hasła się nie pokrywają";
+                    } else{
+                        $sql = "INSERT INTO `users` (`id`, `name`, `password`, `admin`) VALUES (NULL, '".$_POST['login']."', '".sha1($_POST['haslo'])."', '0')";
+                        mysqli_query($conn, $sql);
+                        mysqli_close($conn);
+                        //echo "utworzono";
+                        header('location: index.php');
+                    }
+                }
+                mysqli_close($conn);
+            }
+        ?>
     </div>
     <div id="footer">
         <p>by AN</p>

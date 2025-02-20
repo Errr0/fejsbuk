@@ -1,8 +1,12 @@
 <?php
     session_start();
-    if(!isset($_SESSION['id'])){
-        header(header: 'location: index.php');
+    if(!isset($_SESSION['name'])){
+        header('location: index.php');
     }
+    if(isset($_POST['wyloguj'])){
+        session_destroy();
+        header('location: index.php');
+    } 
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -17,16 +21,21 @@
             <h1>FejsBuk</h1>
         </div>
         <div style="float: right;">
-            <form action="index.php" method="post">
-                <button name="logowanie">Logowanie</button>
+
+            <form method="post">
+                <button name="wyloguj">Wyloguj</button>
             </form>
-            <form action="rejestracja.php" method="post">
-                <button name="rejestracja">Rejestarcja</button>
-            </form>
+            <?php
+                if($_SESSION['admin']){
+                    echo "<form action=\"admin.php\" method=\"post\">";
+                    echo "<button name=\"admin\">Admin</button>";
+                    echo "</form>";
+                }
+            ?>
         </div>
     </div>
     <div id="content">
-
+        ZALOGOWANO
     </div>
     <div id="footer">
         <p>by AN</p>

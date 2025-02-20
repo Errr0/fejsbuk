@@ -29,12 +29,18 @@
         <?php
             if(isset($_POST['loguj'])){
                 $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
-                $sql = "SELECT `id`, `name` FROM `users` WHERE `name` = '".$_POST['haslo']."' AND `password` = '".$_POST['haslo']."'";
+                $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `name` = '".$_POST['login']."' AND `password` = '".sha1($_POST['haslo'])."'";
                 $result = mysqli_fetch_array(mysqli_query($conn, $sql));
                 mysqli_close($conn);
-                session_start();
-                $_SESSION["id"] = $result[0];
-                $_SESSION["name"] = $result[1];
+                if($result){
+                    session_start();
+                    $_SESSION["id"] = $result[0];
+                    $_SESSION["name"] = $result[1];
+                    $_SESSION["admin"] = $result[2];
+                    header("location: zalogowany.php");
+                } else {
+                    echo "Błędny login lub hasło";
+                }
             }
         ?>
     </div>
