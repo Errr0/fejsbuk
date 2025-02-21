@@ -25,6 +25,9 @@
             <form method="post">
                 <button name="wyloguj">Wyloguj</button>
             </form>
+            <form action="opcje.php" method="post">
+                <button name="opcje">Opcje</button>
+            </form>
             <?php
                 if($_SESSION['admin']){
                     echo "<form action=\"admin.php\" method=\"post\">";

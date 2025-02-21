@@ -1,5 +1,5 @@
 *{
-    margin: 0px;
+    margin: 0 !important;
 }
 
 html{
@@ -38,4 +38,19 @@ h1{
 
 button{
     width: 100px;
+}
+
+table{
+    border: solid black 1px;
+    border-spacing: 0;
+}
+
+th{
+    border: solid black 1px;
+}
+
+
+td{
+    margin: 0;
+    border: solid black 1px;
 }

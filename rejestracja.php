@@ -29,6 +29,10 @@
         </form>
         <?php
             if(isset($_POST['dodaj_konto'])){
+
+
+                
+
                 $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
                 $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `name` = '".$_POST['login']."'";// AND `password` = '".sha1($_POST['haslo'])."'";
                 $result = mysqli_fetch_array(mysqli_query($conn, $sql));
@@ -39,7 +43,8 @@
                     if($_POST['haslo'] != $_POST['haslo2']){
                         echo "hasła się nie pokrywają";
                     } else{
-                        $sql = "INSERT INTO `users` (`id`, `name`, `password`, `admin`) VALUES (NULL, '".$_POST['login']."', '".sha1($_POST['haslo'])."', '0')";
+
+                        $sql = "INSERT INTO `users` (`id`, `name`, `password`, `admin`) VALUES (NULL, '".$_POST['login']."', '".openssl_encrypt($_POST['haslo'], "AES-128-ECB", $_POST['login']."maslohaslo")."', '0')";
                         mysqli_query($conn, $sql);
                         mysqli_close($conn);
                         //echo "utworzono";
