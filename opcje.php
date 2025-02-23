@@ -9,7 +9,7 @@
     } 
     $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
     $sql = "SELECT `id` FROM `users` WHERE `id` = 0";
-    if(isset($_POST['edit_name'])){
+    if(isset($_POST['edit_name'])){//add checking if login is used
         $sql = "UPDATE `users` SET `name` = '".$_POST['value']."' WHERE `id` = ".$_SESSION['id'];
     }
     if(isset($_POST['edit_password'])){
