@@ -30,7 +30,7 @@
         // admin password d033e22ae348aeb5660fc2140aec35850c4da997
             if(isset($_POST['loguj'])){
                 $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
-                $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `name` = '".$_POST['login']."' AND `password` = '".openssl_encrypt($_POST['haslo'], "AES-128-ECB", $_POST['login']."maslohaslo")."'";
+                $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `name` = '".$_POST['login']."' AND `password` = '".sha1($_POST['haslo'])."'";//openssl_encrypt($_POST['haslo'], "AES-128-ECB", $_POST['login']."maslohaslo")
                 $result = mysqli_fetch_array(mysqli_query($conn, $sql));
                 mysqli_close($conn);
                 if($result){

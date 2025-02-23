@@ -44,7 +44,7 @@
                         echo "hasła się nie pokrywają";
                     } else{
 
-                        $sql = "INSERT INTO `users` (`id`, `name`, `password`, `admin`) VALUES (NULL, '".$_POST['login']."', '".openssl_encrypt($_POST['haslo'], "AES-128-ECB", $_POST['login']."maslohaslo")."', '0')";
+                        $sql = "INSERT INTO `users` (`id`, `name`, `password`, `admin`) VALUES (NULL, '".$_POST['login']."', '".sha1($_POST['haslo'])."', '0')";
                         mysqli_query($conn, $sql);
                         mysqli_close($conn);
                         //echo "utworzono";

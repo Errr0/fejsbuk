@@ -6,7 +6,18 @@
     if(isset($_POST['wyloguj'])){
         session_destroy();
         header('location: index.php');
-    } 
+    }
+    $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
+    $sql = "DELETE FROM `users` WHERE `id` = ";
+    if(isset($_POST['edit_name'])){
+        "UPDATE `users` SET `name` = '".$_POST['value']."' WHERE `id` = ".$_POST['edit_account'];
+    }
+    if(isset($_POST['edit_password'])){
+        "UPDATE `users` SET `password` = '".$_POST['value']."' WHERE `id` = ".$_POST['edit_account'];
+    }
+    if(isset($_POST['delete2'])){
+        $sql = "DELETE FROM `users` WHERE `id` = ".$_POST['edit_account'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -24,29 +35,39 @@
             <form method="post">
                 <button name="wyloguj">Wyloguj</button>
             </form>
+            <form action="opcje.php" method="post">
+                <button name="opcje">Opcje</button>
+            </form>
             <form action="zalogowany.php" method="post">
                 <button name="cofnij">Cofnij</button>
             </form>
         </div>
     </div>
     <div id="content">
-        <div style="float: left;">
+        <div style="float: left; width: 50%;">
         <form method="post">
+            <label>Search by:
+            <select id="searchBy" name="searchBy">
+                <option value="name">Login</option>
+                <option value="id">ID</option>
+            </select>
+            </label>
             <input type="text", name="login", placeholder="szukaj">
+            Admin:
+            <label> tak <input type="checkbox" id="adminCheck" name="adminCheck" value="1"></label>
+            <label> nie <input type="checkbox" id="adminCheck" name="adminCheck" value="0"></label>
             <button name="szukaj">Szukaj</button>
             <table>
                 <tr>
                     <th>ID</th>
                     <th>Login</th>
-                    <th>Haslo</th>
-                    <th>Pokarz haslo</th>
                     <th>Admin</th>
                     <th>Opcje</th>
                 </tr>
             <?php
             // <th></th>
-                $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
-                $sql = "SELECT `id`, `name`, `password`, `admin` FROM `users`".(isset($_POST['szukaj']) && $_POST['login']!="" ? "WHERE `name` = '".$_POST['login']."'" : "");// WHERE `name` = '".$_POST['login']."'";// AND `password` = '".sha1($_POST['haslo'])."'";
+                //$conn = mysqli_connect("localhost", "root", "", "fejsbuk");
+                $sql = "SELECT `id`, `name`, `admin` FROM `users`".(isset($_POST['szukaj']) && $_POST['login']!="" ? "WHERE ".(isset($_POST['adminCheck']) ? "`admin` = ".$_POST['adminCheck']." AND " : " " )."`".$_POST['searchBy']."` = '".$_POST['login']."'" : "");// WHERE `name` = '".$_POST['login']."'";// AND `password` = '".sha1($_POST['haslo'])."'";
                 $result = mysqli_query($conn, $sql);
                 while($row = mysqli_fetch_array($result)){
                     echo "<tr>";
@@ -58,30 +79,65 @@
                         echo $row[1];
                     echo "</td>";
                     echo "<td>";
-                    if(isset($_POST['show']) && $row[0] == $_POST['show']){
-                        echo openssl_decrypt($row[2], "AES-128-ECB", $row[1]."maslohaslo");
-                    } else{
-                        echo "hasło ukryte";
-                    }
+                        echo $row[2] ? "tak" : "nie";
                     echo "</td>";
                     echo "<td>";
-                    if(isset($_POST['show']) && $row[0] == $_POST['show']){
-                        echo "<button name=\"hide\" value=\"$row[0]\">ukryj hasło</button>";
-                    } else{
-                        echo "<button name=\"show\" value=\"$row[0]\">Pokarz hasło</button>";
-                    }
-                    echo "</td>";
-                    echo "<td>";
-                        echo $row[3] ? "tak" : "nie";//"<input type=\"checkbox\" checked disabled>";
-                    echo "</td>";
-                    echo "<td>";
-                        echo "<button name=\"edit\" value=\"$row[0]\">Edytuj</button>";
-                        echo "<button name=\"delete\" value=\"$row[0]\">Usuń</button>";
+                        echo "<button name=\"edit_account\" value=\"".$row[0]."\">Edytuj</button>";
+                        echo "<button name=\"login\" value=\"".$row[0]."\">Zaloguj</button>";
+                        //echo "<button name=\"edit\" value=\"password\">Edytuj hasło</button>";
+                        //echo "<button name=\"delete\">Usuń konto</button>";
                     echo "</td>";
                     echo "</tr>";
                 }
+                //mysqli_close($conn);
             ?>
             </table>
+            </form>
+        </div>
+        <div style="float: left; width: 50%;">
+            <h2>Opcje</h2><br/>
+            <form method="post">
+            <?php
+                $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `id` = ".$_SESSION['id'];// WHERE `name` = '".$_POST['login']."'";// AND `password` = '".sha1($_POST['haslo'])."'";
+                if(isset($_POST['edit_account'])){
+                    echo "<input type=\"hidden\" name=\"edit_account\" value=\"".$_POST['edit_account']."\">";
+                    $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `id` = ".$_POST['edit_account'];
+                }
+                $row = mysqli_fetch_array(mysqli_query($conn, $sql));
+                echo "<b>ID </b>";
+                echo $row[0];
+                echo "<br/>";
+
+                echo "<b>Login </b>";
+                echo $row[1];
+                echo "<br/>";
+
+                echo "<b>Admin </b>";
+                echo $row[2] ? "tak" : "nie";
+                echo "<br/>";
+
+                if(isset($_POST['edit']) && $_POST['edit'] == "name"){
+                    echo "<input type=\"text\" name=\"value\">";
+                    echo "<button name='edit_name' value=\"\">Potwierdź</button>";
+                } else{
+                    echo "<button name='edit' value='name'>Edytuj login</button> ";
+                }
+                echo "<br/>";
+
+                if(isset($_POST['edit']) && $_POST['edit'] == "password"){
+                    echo "<input type=\"text\" name=\"value\">";
+                    echo "<button name='edit_password'>Potwierdź</button>";
+                } else{
+                    echo "<button name='edit' value='password'>Edytuj hasło</button> ";
+                }
+                echo "<br/>";
+                if(isset($_POST['delete'])){
+                    echo "<button name='delete2'>Potwierdź</button>";
+                } else{
+                    echo "<button name='delete'>Usuń konto</button>";
+                }
+                mysqli_close($conn);
+            ?>
             </form>
         </div>
     </div>

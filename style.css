@@ -41,8 +41,10 @@ button{
 }
 
 table{
+    margin: auto;
     border: solid black 1px;
     border-spacing: 0;
+    width:90%;
 }
 
 th{
@@ -53,4 +55,5 @@ th{
 td{
     margin: 0;
     border: solid black 1px;
+    width:25%;
 }
