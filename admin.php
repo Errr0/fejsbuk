@@ -8,16 +8,34 @@
         header('location: index.php');
     }
     $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
-    $sql = "DELETE FROM `users` WHERE `id` = ";
+    if(isset($_POST['login'])){
+        echo "login: ".$_POST['login'];
+        // session_destroy();
+        $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
+        $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `id` = ".$_POST['login'];
+        $result = mysqli_fetch_array(mysqli_query($conn, $sql));
+        if($result){
+            mysqli_close($conn);
+            session_start();
+            $_SESSION["id"] = $result[0];
+            $_SESSION["name"] = $result[1];
+            $_SESSION["admin"] = $result[2];
+            header("location: zalogowany.php");
+        } else {
+            echo "Błąd logowania";
+        }
+    }
+    $sql = "DELETE FROM `users` WHERE `id` = 0";
     if(isset($_POST['edit_name'])){
-        "UPDATE `users` SET `name` = '".$_POST['value']."' WHERE `id` = ".$_POST['edit_account'];
+        $sql = "UPDATE `users` SET `name` = '".$_POST['value']."' WHERE `id` = ".$_POST['edit_account'];
     }
     if(isset($_POST['edit_password'])){
-        "UPDATE `users` SET `password` = '".$_POST['value']."' WHERE `id` = ".$_POST['edit_account'];
+        $sql = "UPDATE `users` SET `password` = '".sha1($_POST['value'])."' WHERE `id` = ".$_POST['edit_account'];
     }
     if(isset($_POST['delete2'])){
         $sql = "DELETE FROM `users` WHERE `id` = ".$_POST['edit_account'];
     }
+    mysqli_query($conn, $sql)
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -102,6 +120,8 @@
                 if(isset($_POST['edit_account'])){
                     echo "<input type=\"hidden\" name=\"edit_account\" value=\"".$_POST['edit_account']."\">";
                     $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `id` = ".$_POST['edit_account'];
+                } else{
+                    echo "<input type=\"hidden\" name=\"edit_account\" value=\"".$_SESSION['id']."\">";
                 }
                 $row = mysqli_fetch_array(mysqli_query($conn, $sql));
                 echo "<b>ID </b>";
