@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    if(isset($_SESSION["id"]) && $_SESSION["id"]){
+        header('location: zalogowany.php');
+    } else {
+        session_destroy();
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -23,7 +32,7 @@
         <h2>Logowanie</h2><br/>
         <form method="post">
         <input required type="text" name="login" placeholder="login"><br/>
-        <input required type="text" name="haslo" placeholder="haslo"><br/>
+        <input required type="password" name="haslo" placeholder="haslo"><br/>
         <button name="loguj">Zaloguj się</button>
         </form>
         <?php

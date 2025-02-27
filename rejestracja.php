@@ -29,10 +29,6 @@
         </form>
         <?php
             if(isset($_POST['dodaj_konto'])){
-
-
-                
-
                 $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
                 $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `name` = '".$_POST['login']."'";// AND `password` = '".sha1($_POST['haslo'])."'";
                 $result = mysqli_fetch_array(mysqli_query($conn, $sql));

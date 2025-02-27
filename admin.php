@@ -8,21 +8,22 @@
         header('location: index.php');
     }
     $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
-    if(isset($_POST['login'])){
+    if(isset($_POST['login']) && $_POST['login'] != ""){
         echo "login: ".$_POST['login'];
         // session_destroy();
         $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
-        $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `id` = ".$_POST['login'];
-        $result = mysqli_fetch_array(mysqli_query($conn, $sql));
+        $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `id` = '".$_POST['login']."'";
+        $result = mysqli_fetch_array(mysqli_query($conn, $sql));//breaks
         if($result){
             mysqli_close($conn);
+            session_reset();
             session_start();
             $_SESSION["id"] = $result[0];
             $_SESSION["name"] = $result[1];
             $_SESSION["admin"] = $result[2];
             header("location: zalogowany.php");
         } else {
-            echo "Błąd logowania";
+            echo "Błąd logowania".$_POST['login'];
         }
     }
     $sql = "DELETE FROM `users` WHERE `id` = 0";
@@ -101,6 +102,7 @@
                     echo "</td>";
                     echo "<td>";
                         echo "<button name=\"edit_account\" value=\"".$row[0]."\">Edytuj</button>";
+
                         echo "<button name=\"login\" value=\"".$row[0]."\">Zaloguj</button>";
                         //echo "<button name=\"edit\" value=\"password\">Edytuj hasło</button>";
                         //echo "<button name=\"delete\">Usuń konto</button>";
