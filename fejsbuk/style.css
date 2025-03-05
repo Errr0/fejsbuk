@@ -1,0 +1,96 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+html{
+    margin: 0px;
+    height: 100%;
+    color: #EDEDED;
+    background-color: #212529;
+    text-align: center;
+}
+
+body{
+    margin: 0px;
+    height: 100%;
+}
+
+#header{
+    height: 110px;
+    text-align: left;
+    border-bottom: solid 4px #DA0037;
+    background-color: #1a1a1a;
+    box-shadow: 0px 2px 20px 3px #AA0010;
+}
+
+#container{
+    height: calc(100% - 115px);
+}
+
+
+
+#login{   
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    max-width: 400px;
+    height: 300px;
+    border: #DA0037 solid 4px;
+    border-radius: 24px;
+    box-shadow: 0px 2px 20px 3px #AA0010;
+}
+
+h1{
+    font-size: 95px;
+}
+
+h2{
+    font-size: 45px;
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+input{
+    color: #EDEDED;
+    border: #DA0037 solid 2px;
+    box-shadow: 0px 1px 1px 1px #AA0010;
+    background-color: #212529;
+    border-radius: 8px;
+    height: 25px;
+    width: 210px;
+    margin: 4px;
+    padding: 4px;
+}
+
+.form_button{
+    color: #EDEDED;
+    border: #DA0037 solid 2px;
+    box-shadow: 0px 1px 1px 1px #AA0010;
+    background-color: #212529;
+    border-radius: 12px;
+    font-size: 16px;
+    height: 35px;
+    width: 216px;
+    padding: 2px;
+    margin: 4px;
+}
+
+.form_button:hover{
+    background-color: #DA0037;
+    box-shadow: 0px 2px 2px 2px #DA0037;
+}
+
+.icon_button{
+    color: #EDEDED;
+    font-size: 80px;
+    margin: 10px;
+    background: none;
+    border:0;
+}
+
+.icon_button:hover{
+    color:#DA0037;
+}
