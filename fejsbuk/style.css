@@ -1,3 +1,8 @@
+:root{
+    --color: #EDEDED;
+    --accent-color: #888888;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -7,9 +12,10 @@
 html{
     margin: 0px;
     height: 100%;
-    color: #EDEDED;
+    color: var(--color);
     background-color: #212529;
     text-align: center;
+    overflow: hidden;
 }
 
 body{
@@ -17,19 +23,38 @@ body{
     height: 100%;
 }
 
-#header{
+#head{
     height: 110px;
     text-align: left;
-    border-bottom: solid 4px #DA0037;
+    border-bottom: solid 4px var(--color);
     background-color: #1a1a1a;
-    box-shadow: 0px 2px 20px 3px #AA0010;
 }
 
-#container{
-    height: calc(100% - 115px);
+#body{
+    position: relative;
 }
 
+#friends {
+    top: 0;
+    left: 20px;
+    position: absolute;
+    width: 60%;
+    max-width: 400px;
+    height: 600px;
+    border: var(--color) solid 4px;
+    border-radius: 24px;
+}
 
+#profile {
+    top: 0;
+    right: 20px;
+    position: absolute;
+    width: 60%;
+    max-width: 400px;
+    height: 600px;
+    border: var(--color) solid 4px;
+    border-radius: 24px;
+}
 
 #login{   
     margin-top: 50px;
@@ -38,9 +63,19 @@ body{
     width: 60%;
     max-width: 400px;
     height: 300px;
-    border: #DA0037 solid 4px;
+    border: var(--color) solid 4px;
     border-radius: 24px;
-    box-shadow: 0px 2px 20px 3px #AA0010;
+}
+
+#content{   
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    max-width: 900px;
+    height: 600px;
+    border: var(--color) solid 4px;
+    border-radius: 24px;
 }
 
 h1{
@@ -54,9 +89,8 @@ h2{
 }
 
 input{
-    color: #EDEDED;
-    border: #DA0037 solid 2px;
-    box-shadow: 0px 1px 1px 1px #AA0010;
+    color: var(--color);
+    border: var(--color) solid 2px;
     background-color: #212529;
     border-radius: 8px;
     height: 25px;
@@ -66,9 +100,8 @@ input{
 }
 
 .form_button{
-    color: #EDEDED;
-    border: #DA0037 solid 2px;
-    box-shadow: 0px 1px 1px 1px #AA0010;
+    color: var(--color);
+    border: var(--color) solid 2px;
     background-color: #212529;
     border-radius: 12px;
     font-size: 16px;
@@ -79,18 +112,50 @@ input{
 }
 
 .form_button:hover{
-    background-color: #DA0037;
-    box-shadow: 0px 2px 2px 2px #DA0037;
+    background-color: var(--color);
+    border-width: 4px;
+    color: #1a1a1a;
 }
 
-.icon_button{
-    color: #EDEDED;
-    font-size: 80px;
-    margin: 10px;
+.top_right_button{
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    color: var(--accent-color);
+    font-size: 30px;
     background: none;
-    border:0;
+    border: 0;
+}
+
+.top_right_button:hover{
+    color: #EDEDED;
+}
+
+/* .icon_button{
+    color: #EDEDED;
+    margin-top: 12px;
+    margin-right: 16px;
+    font-size: 20px;
+    background: none;
+    border: 0;
 }
 
 .icon_button:hover{
-    color:#DA0037;
+    color:var(--color);
+} */
+
+
+/* .close_button{
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    color: #EDEDED;
+    font-size: 20px;
+    background: none;
+    border: 0;
 }
+
+.close_button:hover{
+    color:#DA0037;
+} */
+

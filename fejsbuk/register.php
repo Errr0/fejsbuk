@@ -3,36 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Fejsbuk</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="header">
+    <div id="head">
         <div style="float: left;">
             <h1>FaceBuk</h1>
         </div>
-        <div style="float: right;">
-            <form action="login.php">
+        <div style="float: right; margin-top: 10px;">
+            <form action="login.php" method="post">
                 <button class="form_button">Logowanie</button>
             </form>
-            <form action="register.php">
+            <form action="register.php" method="post">
                 <button class="form_button">Rejestracja</button>
             </form>
-            <!-- <button class="fa-solid fa-circle-user icon_button"></button> -->
-            <!-- <button class="fa-solid fa-gear icon_button"></button> -->
+
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
         </div>
     </div>
-    <div id="container">
-        <div id="login">
-            <form method="post" style="margin-top: 20px;">
-                <h2>Rejestracja</h2>
-                <input required type="text" name="login" placeholder="login" maxlength="16"><br/>
-                <input required type="password" name="haslo" placeholder="haslo" maxlength="32"><br/>
-                <input required type="password2" name="haslo" placeholder="powtórz haslo" maxlength="32"><br/>
-                <button name="loguj" class="form_button">Zarejestruj się</button>
-            </form>
-            
-        </div>
+
+    <div id="login">
+        <form method="post" style="margin-top: 20px;">
+            <h2>Rejestracja</h2>
+            <input required type="text" name="name" placeholder="login" maxlength="16"><br/>
+            <input required type="password" name="password" placeholder="haslo" maxlength="32"><br/>
+            <input required type="password" name="password2" placeholder="powtórz haslo" maxlength="32"><br/>
+            <button name="register" class="form_button">Zarejestruj się</button>
+        </form>
+        <p id="output">
+        <?php
+            if(isset($_POST['register'])){
+                $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
+                $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `name` = '".$_POST['name']."'";
+                $result = mysqli_fetch_array(mysqli_query($conn, $sql));
+                if($result){
+                    echo "login zajęty";
+                } else {
+                    if($_POST['password'] != $_POST['password2']){
+                        echo "hasła muszą być takie same";
+                    } else{
+                        $sql = "INSERT INTO `users` (`id`, `name`, `password`, `admin`) VALUES (NULL, '".$_POST['name']."', '".sha1($_POST['password'])."', '0')";
+                        mysqli_query($conn, $sql);
+                        mysqli_close($conn);
+                        header('location: index.php');
+                    }
+                }
+                mysqli_close($conn);
+            }
+        ?>
+        </p>
     </div>
 </body>
 </html>

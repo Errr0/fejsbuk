@@ -6,30 +6,49 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="header">
+    <div id="head">
         <div style="float: left;">
             <h1>FaceBuk</h1>
         </div>
-        <div style="float: right;">
-            <form action="login.php">
+        <div style="float: right; margin-top: 10px;">
+            <form action="login.php" method="post">
                 <button class="form_button">Logowanie</button>
             </form>
-            <form action="register.php">
+            <form action="register.php" method="post">
                 <button class="form_button">Rejestracja</button>
             </form>
-            <!-- <button class="fa-solid fa-circle-user icon_button"></button> -->
-            <!-- <button class="fa-solid fa-gear icon_button"></button> -->
+
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
         </div>
     </div>
-    <div id="container">
-        <div id="login">
-            <form method="post" style="margin-top: 20px;">
-                <h2>Logowanie</h2>
-                <input required type="text" name="login" placeholder="login" maxlength="16"><br/>
-                <input required type="password" name="haslo" placeholder="haslo" maxlength="32"><br/>
-                <button class="form_button">Zaloguj się</button>
-            </form>
-        </div>
+
+    <div id="login">
+        <form method="post" style="margin-top: 20px;">
+            <h2>Logowanie</h2>
+            <input required type="text" name="name" placeholder="login" maxlength="16"><br/>
+            <input required type="password" name="password" placeholder="haslo" maxlength="32"><br/>
+            <button name="login" class="form_button">Zaloguj się</button>
+        </form>
+        <p id="output">
+        <?php
+            if(isset($_POST['login'])){
+                $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
+                $sql = "SELECT `id`, `name`, `admin` FROM `users` WHERE `name` = '".$_POST['name']."' AND `password` = '".sha1($_POST['password'])."'";
+                $result = mysqli_fetch_array(mysqli_query($conn, $sql));
+                mysqli_close($conn);
+                if($result){
+                    session_start();
+                    $_SESSION["id"] = $result['id'];
+                    $_SESSION["name"] = $result['name'];
+                    $_SESSION["password"] = $_POST['password'];
+                    $_SESSION["admin"] = $result['admin'];
+                    header("location: logged.php");
+                } else {
+                    echo "Błędny login lub hasło";
+                }
+            }
+        ?>
+        </p>
     </div>
 </body>
 </html>
