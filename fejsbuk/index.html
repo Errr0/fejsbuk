@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Resizable & Draggable Windows</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .window {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            background: white;
+            border: 2px solid black;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            resize: both;
+            overflow: auto;
+            top: 50px;
+            left: 50px;
+        }
+
+        .title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0078D7;
+            color: white;
+            padding: 5px;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .close-btn {
+            background: red;
+            color: white;
+            border: none;
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            line-height: 18px;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            background: darkred;
+        }
+
+        .content {
+            padding: 10px;
+        }
+
+        .add-window-btn {
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .add-window-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="add-window-btn" id="addWindowBtn">Add Window</button>
+
+    <script>
+        let windowCount = 0;
+
+        function createWindow() {
+            windowCount++;
+
+            // Create window container
+            const windowDiv = document.createElement('div');
+            windowDiv.classList.add('window');
+            windowDiv.id = `window-${windowCount}`;
+            windowDiv.style.top = `${50 + windowCount * 20}px`;
+            windowDiv.style.left = `${50 + windowCount * 20}px`;
+
+            // Create title bar
+            const titleBar = document.createElement('div');
+            titleBar.classList.add('title-bar');
+            titleBar.innerHTML = `<span>Window ${windowCount}</span>`;
+            
+            // Create close button
+            const closeBtn = document.createElement('button');
+            closeBtn.classList.add('close-btn');
+            closeBtn.textContent = 'X';
+            closeBtn.addEventListener('click', () => {
+                windowDiv.remove();
+            });
+
+            // Append close button to title bar
+            titleBar.appendChild(closeBtn);
+
+            // Create content area
+            const contentDiv = document.createElement('div');
+            contentDiv.classList.add('content');
+            contentDiv.textContent = 'You can move and resize me!';
+
+            // Append elements to window
+            windowDiv.appendChild(titleBar);
+            windowDiv.appendChild(contentDiv);
+
+            // Append window to body
+            document.body.appendChild(windowDiv);
+
+            // Enable dragging for this window
+            makeDraggable(windowDiv, titleBar);
+        }
+
+        function makeDraggable(windowElement, titleBar) {
+            let isDragging = false;
+            let offsetX, offsetY;
+
+            titleBar.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                offsetX = e.clientX - windowElement.offsetLeft;
+                offsetY = e.clientY - windowElement.offsetTop;
+                titleBar.style.cursor = "grabbing";
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    windowElement.style.left = e.clientX - offsetX + 'px';
+                    windowElement.style.top = e.clientY - offsetY + 'px';
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                titleBar.style.cursor = "grab";
+            });
+        }
+
+        // Add event listener to "Add Window" button
+        document.getElementById('addWindowBtn').addEventListener('click', createWindow);
+
+        // Create the first window initially
+        createWindow();
+    </script>
+
+</body>
+</html>

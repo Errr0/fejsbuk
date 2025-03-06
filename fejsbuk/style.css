@@ -34,48 +34,30 @@ body{
     position: relative;
 }
 
-#friends {
-    top: 0;
-    left: 20px;
+#friends, #profile, #content {
     position: absolute;
     width: 60%;
     max-width: 400px;
     height: 600px;
     border: var(--color) solid 4px;
     border-radius: 24px;
+}
+
+#friends {
+    top: 0;
+    left: 20px;
 }
 
 #profile {
     top: 0;
     right: 20px;
-    position: absolute;
-    width: 60%;
-    max-width: 400px;
-    height: 600px;
-    border: var(--color) solid 4px;
-    border-radius: 24px;
 }
 
-#login{   
+#content {
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
-    max-width: 400px;
-    height: 300px;
-    border: var(--color) solid 4px;
-    border-radius: 24px;
-}
-
-#content{   
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 60%;
     max-width: 900px;
-    height: 600px;
-    border: var(--color) solid 4px;
-    border-radius: 24px;
 }
 
 h1{
@@ -86,17 +68,6 @@ h2{
     font-size: 45px;
     margin-top: auto;
     margin-bottom: 20px;
-}
-
-input{
-    color: var(--color);
-    border: var(--color) solid 2px;
-    background-color: #212529;
-    border-radius: 8px;
-    height: 25px;
-    width: 210px;
-    margin: 4px;
-    padding: 4px;
 }
 
 .form_button{
@@ -117,45 +88,102 @@ input{
     color: #1a1a1a;
 }
 
-.top_right_button{
+.custom-window {
     position: absolute;
-    top: 12px;
-    right: 16px;
-    color: var(--accent-color);
-    font-size: 30px;
-    background: none;
-    border: 0;
+    width: 60%;
+    max-width: 400px;
+    min-width: 50px;
+    height: 600px;
+    max-height: 800px;
+    min-height: 20px;
+    border: var(--color) solid 4px;
+    border-radius: 24px;
+    background-color: #1a1a1a;
+    color: var(--color);
+    text-align: center;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
 
-.top_right_button:hover{
-    color: #EDEDED;
-}
-
-/* .icon_button{
-    color: #EDEDED;
-    margin-top: 12px;
-    margin-right: 16px;
+.window-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2a2a2a;
+    color: white;
+    padding: 10px;
     font-size: 20px;
-    background: none;
-    border: 0;
+    cursor: grab;
+    border-bottom: 2px solid var(--color);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
 }
 
-.icon_button:hover{
-    color:var(--color);
-} */
+.window-content {
+    padding: 15px;
+    font-size: 18px;
+    flex-grow: 1;
+}
 
+.close-btn {
+    background: red;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 50%;
+}
 
-/* .close_button{
+.close-btn:hover {
+    background: darkred;
+}
+
+.add-window-btn {
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.add-window-btn:hover {
+    background: #218838;
+}
+
+/* Resizing Handles */
+.resize-handle {
     position: absolute;
-    top: 12px;
-    right: 16px;
-    color: #EDEDED;
-    font-size: 20px;
-    background: none;
-    border: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--accent-color);
+    cursor: pointer;
 }
 
-.close_button:hover{
-    color:#DA0037;
-} */
+/* Resizing Handles */
+.resize-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: transparent;  /* Invisible */
+    cursor: pointer;
+}
+
+/* Corner Handles */
+.top-left { top: -5px; left: -5px; cursor: nwse-resize; }
+.top-right { top: -5px; right: -5px; cursor: nesw-resize; }
+.bottom-left { bottom: -5px; left: -5px; cursor: nesw-resize; }
+.bottom-right { bottom: -5px; right: -5px; cursor: nwse-resize; }
+
+/* Side Handles - Always Full Width/Height */
+.top { top: -5px; left: 0; width: 100%; height: 10px; cursor: ns-resize; }
+.bottom { bottom: -5px; left: 0; width: 100%; height: 10px; cursor: ns-resize; }
+.left { left: -5px; top: 0; width: 10px; height: 100%; cursor: ew-resize; }
+.right { right: -5px; top: 0; width: 10px; height: 100%; cursor: ew-resize; }
 
