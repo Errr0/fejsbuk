@@ -1,5 +1,49 @@
 let windowCount = 0;
 
+
+
+function createAdminWindow() {
+    windowCount++;
+
+    const windowDiv = document.createElement('div');
+    windowDiv.classList.add('custom-window');
+    windowDiv.id = `adminWindow-${windowCount}`;
+    windowDiv.style.top = `${50 + windowCount * 20}px`;
+    windowDiv.style.left = `${50 + windowCount * 20}px`;
+
+    const titleBar = document.createElement('div');
+    titleBar.classList.add('window-title');
+    titleBar.innerHTML = `<span>Admin</span>`;
+
+    const closeBtn = document.createElement('button');
+    closeBtn.classList.add('close-btn');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.addEventListener('click', () => {
+        windowDiv.remove();
+    });
+
+    titleBar.appendChild(closeBtn);
+
+    const contentDiv = document.createElement('div');
+    contentDiv.classList.add('window-content');
+    contentDiv.textContent = '';//text in the window
+
+    windowDiv.appendChild(titleBar);
+    windowDiv.appendChild(contentDiv);
+
+    const positions = ["top", "right", "bottom", "left", "top-left", "top-right", "bottom-left", "bottom-right"];
+    positions.forEach(pos => {
+        const handle = document.createElement("div");
+        handle.classList.add("resize-handle", pos);
+        windowDiv.appendChild(handle);
+        makeResizable(windowDiv, handle, pos);
+    });
+
+    document.getElementById("body").appendChild(windowDiv);
+    makeDraggable(windowDiv, titleBar);
+}
+
+
 function createWindow() {
     windowCount++;
 
@@ -24,7 +68,7 @@ function createWindow() {
 
     const contentDiv = document.createElement('div');
     contentDiv.classList.add('window-content');
-    contentDiv.textContent = 'Przesuń i dostosuj mnie!';
+    contentDiv.textContent = '';//text in the window
 
     windowDiv.appendChild(titleBar);
     windowDiv.appendChild(contentDiv);
@@ -59,9 +103,23 @@ function makeDraggable(windowElement, titleBar) {
         }
     });
 
+    
     document.addEventListener('mouseup', () => {
         isDragging = false;
         titleBar.style.cursor = "grab";
+        console.log(window.innerHeight-110)
+        console.log(windowElement.style.top)
+        if(parseInt(windowElement.style.top) < 0){
+            windowElement.style.top = '0px'
+        } else if(parseInt(windowElement.style.top) > window.innerHeight-150){
+            windowElement.style.top = window.innerHeight - 150 +'px'
+            console.log(windowElement.style.top)
+        }
+        // if(parseInt(windowElement.style.right) < 0){
+        //     windowElement.style.left = '0px'
+        // } else if(parseInt(windowElement.style.left) > window.innerWidth-10){
+        //     windowElement.style.right = window.innerWidth +'px'
+        // }
     });
 }
 
@@ -135,3 +193,4 @@ function makeResizable(windowElement, handle, position) {
 
 
 document.getElementById('addWindowBtn').addEventListener('click', createWindow);
+document.getElementById('adminButton').addEventListener('click', createAdminWindow);

@@ -38,9 +38,9 @@ if(isset($_POST['logout'])){
         </form>
         <?php
         if($_SESSION["admin"]){
-            echo "<form action=\"admin.php\" method=\"post\">";
-            echo "<button class=\"form_button\">Admin</button>";
-            echo "</form>";
+            //echo "<form method=\"post\">";
+            echo "<button id=\"adminButton\" class=\"form_button\">Admin</button>";
+            //echo "</form>";
         }
         ?>
     </div>
