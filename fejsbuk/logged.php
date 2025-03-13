@@ -33,23 +33,49 @@ if(isset($_POST['logout'])){
         <h1>FaceBuk</h1>
     </div>
     <div style="float: right; margin-top: 10px;">
-        <form method="post">
-            <button name="logout" class="form_button">Wyloguj</button>
-        </form>
-        <?php
-        if($_SESSION["admin"]){
-            //echo "<form method=\"post\">";
-            echo "<button id=\"adminButton\" class=\"form_button\">Admin</button>";
-            //echo "</form>";
-        }
-        ?>
+        <table>
+            <tr>
+                <td>
+                    <!-- <button id="" class="form_button"></button> -->
+                </td>
+                <td>
+                    <button id="friendsButton" class="form_button">Znajomi</button>
+                </td>
+                <td>
+                <form method="post">
+                    <button name="logout" class="form_button">Wyloguj</button>
+                </form>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- <button id="" class="form_button"></button> -->
+                    <?php
+                    if($_SESSION["admin"]){
+                        echo "<button id=\"adminButton\" class=\"form_button\">Admin</button>";
+                    }
+                    ?>
+                </td>
+                <td>
+                    <!-- <button id="profileButton" class="form_button">Profil</button> -->
+                </td>
+                <td>
+                    <button id="profileButton" class="form_button">Profil</button>
+                    <!-- <button id="optionsButton" class="form_button">Opcje</button> -->
+                </td>
+            </tr>
+        </table>
+        
+        
     </div>
 </div>
 
 <div id="body">
-    <button class="add-window-btn" id="addWindowBtn">Dodaj Okno</button>
+    <!-- <button class="add-window-btn" id="addWindowBtn">Dodaj Okno</button> -->
 </div>
 
-<script src="windowScript.js"></script>
+<script src="createWindow.js"></script>
+<script src="createContents.js"></script>
+<script src="windows.js"></script>
 </body>
 </html>
