@@ -32,8 +32,9 @@ function send_data() {
     .catch(error => console.error('Error:', error));
 }
 
-function getProfileData() {
-    fetch('script.php', {
+async function getProfileData() {
+    var output = 0;
+    await fetch('script.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -44,7 +45,28 @@ function getProfileData() {
     })
     .then(response => response.json())
     .then(data => {
-        document.getElementById('result').innerText = data.output;
+        output = data;
     })
     .catch(error => console.error('Error:', error));
+    return output;
+}
+
+function deleteAccount(){
+    if(confirm("Na pewno?")){
+        fetch('script.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                deleteAccount: "deleteAccount"
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // console.log(data)
+            window.location.reload();
+        })
+        .catch(error => console.error('Error:', error));
+    }
 }

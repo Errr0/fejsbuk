@@ -1,9 +1,11 @@
-function createWindow(id, name, top, left) {
+function createWindow(id, name, top, left, width = 400, height = 400) {
     const windowDiv = document.createElement('div');
     windowDiv.classList.add('custom-window');
     windowDiv.id = id;
     windowDiv.style.top = top+"px";
     windowDiv.style.left = left+"px";
+    windowDiv.style.width = width+"px";
+    windowDiv.style.height = height+"px";
 
     const titleBar = document.createElement('div');
     titleBar.classList.add('window-title');

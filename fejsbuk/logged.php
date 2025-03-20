@@ -16,6 +16,14 @@ if(isset($_POST['logout'])){
     session_destroy();
     header('location: index.php');
 } 
+if(isset($_POST['changePassword'])){
+    if($_POST['password'] == $_POST['password2']){
+        $conn = mysqli_connect("localhost", "root", "", "fejsbuk");
+        $sql = "UPDATE `users` SET `password` = '".sha1($_POST['password'])."' WHERE `id` = ".$_SESSION['id'];
+        $result = mysqli_query($conn, $sql);
+        header("location: index.php");
+    }
+} 
 ?>
 
 <!DOCTYPE html>
@@ -36,10 +44,15 @@ if(isset($_POST['logout'])){
         <table>
             <tr>
                 <td>
+                    <?php
+                    if($_SESSION["admin"]){
+                        echo "<button id=\"adminButton\" class=\"form_button\">Admin</button>";
+                    }
+                    ?>
                     <!-- <button id="" class="form_button"></button> -->
                 </td>
                 <td>
-                    <button id="friendsButton" class="form_button">Znajomi</button>
+                    <!-- <button id="friendsButton" class="form_button">Znajomi</button> -->
                 </td>
                 <td>
                 <form method="post">
@@ -51,12 +64,17 @@ if(isset($_POST['logout'])){
                 <td>
                     <!-- <button id="" class="form_button"></button> -->
                     <?php
-                    if($_SESSION["admin"]){
-                        echo "<button id=\"adminButton\" class=\"form_button\">Admin</button>";
-                    }
+                    // if($_SESSION["admin"]){
+                    //     echo "<button id=\"adminButton\" class=\"form_button\">Admin</button>";
+                    // }
                     ?>
                 </td>
                 <td>
+                    <?php
+                    // if($_SESSION["admin"]){
+                    //     echo "<button id=\"adminButton\" class=\"form_button\">Admin</button>";
+                    // }
+                    ?>
                     <!-- <button id="profileButton" class="form_button">Profil</button> -->
                 </td>
                 <td>
@@ -71,9 +89,8 @@ if(isset($_POST['logout'])){
 </div>
 
 <div id="body">
-    <!-- <button class="add-window-btn" id="addWindowBtn">Dodaj Okno</button> -->
 </div>
-
+<script src="script.js"></script>
 <script src="createWindow.js"></script>
 <script src="createContents.js"></script>
 <script src="windows.js"></script>

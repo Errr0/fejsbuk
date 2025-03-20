@@ -23,6 +23,7 @@
     </div>
 
     <div id="login">
+        <br/>
         <form method="post" style="margin-top: 20px;">
             <h2>Logowanie</h2>
             <input required type="text" name="name" placeholder="login" maxlength="16"><br/>

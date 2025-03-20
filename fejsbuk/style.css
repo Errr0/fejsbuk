@@ -14,13 +14,14 @@
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    user-select: none;
 }
 
 html{
     margin: 0px;
     height: 100%;
     color: var(--white);
-    background-color: var(--gray);
+    background-color: var(--black);
     text-align: center;
     overflow: hidden;
 }
@@ -33,7 +34,7 @@ body{
 #head{
     height: 110px;
     text-align: left;
-    /* border-bottom: solid var(--border-width) var(--white); */
+    border-bottom: solid var(--border-width) var(--white);
     background-color: var(--black);
 }
 
@@ -62,12 +63,13 @@ body{
     height: 300px;
     border: var(--white) solid var(--border-width);
     border-radius: 24px;
+    background-color: var(--gray);
 }
 
 input{
     color: var(--white);
     border: var(--white) solid calc(var(--border-width)/2);
-    background-color: #212529;
+    background-color: var(--black);
     border-radius: 8px;
     height: 25px;
     width: 210px;
@@ -106,7 +108,7 @@ h2{
 .form_button{
     color: var(--white);
     border: var(--white) solid calc(var(--border-width)/2);
-    background-color: var(--gray);
+    background-color: var(--black);
     border-radius: 12px;
     font-size: 16px;
     height: 35px;
@@ -116,9 +118,9 @@ h2{
 }
 
 .form_button:hover{
-    background-color: var(--white);
+    background-color: var(--gray);
     border-width: var(--border-width);
-    color: var(--black);
+    /* color: var(--black); */
 }
 
 .custom-window {
